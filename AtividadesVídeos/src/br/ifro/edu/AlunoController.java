@@ -5,9 +5,16 @@
  */
 package br.ifro.edu;
 
+import br.ifro.edu.modelo.Aluno;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  * FXML Controller class
@@ -16,9 +23,52 @@ import javafx.fxml.Initializable;
  */
 public class AlunoController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private JFXTextField jfxtxtNome;
+    @FXML
+    private Button btnFechar;
+    @FXML
+    private Button btnOk;
+
+        public JFXTextField getJfxtxtNome() {
+            return jfxtxtNome;
+        }
+
+        public void setJfxtxtNome(JFXTextField jfxtxtNome) {
+            this.jfxtxtNome = jfxtxtNome;
+        }
+
+        public Button getBtnFechar() {
+            return btnFechar;
+        }
+
+        public void setBtnFechar(Button btnFechar) {
+            this.btnFechar = btnFechar;
+        }
+
+        public Button getBtnOk() {
+            return btnOk;
+        }
+
+        public void setBtnOk(Button btnOk) {
+            this.btnOk = btnOk;
+        }    
+        
+    @FXML
+    private void salvar (){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
+        EntityManager em = emf.createEntityManager();
+        
+        Aluno aluno1 = new Aluno();
+        aluno1.setNome(jfxtxtNome.getText());
+        
+        em.getTransaction().begin();
+        
+        em.persist(aluno1);
+        
+        em.getTransaction().commit();
+    }
+        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
